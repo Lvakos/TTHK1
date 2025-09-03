@@ -23,11 +23,15 @@ naitleja2 = "Viktor Savić"
 naitleja3 = "Bojana Novakovic"
 
 print("Film "+ filminimi+ " ilmus aastal "+ aasta+ ", rezisöör on " + rezisöör + ", ja peanäitlejad seal on "+ naitleja1+ ", "+ naitleja2+ " ja "+ naitleja3+ ".")
+
+# str() - text -- arv
+# int() - arv -- text
+
 lemmikloom = input("Sisesta oma lemmik loom: ")
 print("Minu lemmikloom on: " + lemmikloom)
 
-pikkus = float(input("sisesta pikkus: "))
-laius = float(input("sisesta laius: "))
+pikkus = int(input("sisesta pikkus: "))
+laius = int(input("sisesta laius: "))
 umbermot = 2 * (pikkus + laius)
 pindala = pikkus * laius
 print("ümbermõõt: ", umbermot)
