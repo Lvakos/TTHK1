@@ -1,0 +1,183 @@
+import random
+
+player = ""
+opponent = ""
+opponents = ""
+
+characters = {
+    "Spartakus": {
+        "health": 100,
+        "stamina": 60
+    },
+    "Kriksu": {
+        "health": 120,
+        "stamina": 40
+    },
+    "Flamma": {
+        "health": 90,
+        "stamina": 70
+    },
+    "Commodus": {
+        "health": 110,
+        "stamina": 50
+    }
+}
+
+print("Tere tulemast mängus GLADIAATOR SUREMIAREEAL!, vali oma võitleja(kirjuta ainult number)")
+print("""
+1. Spartakus (100 elu, 60 vastupidavust)
+Legendaarne ülestõusujuht, mõõga ja kilbi meister.
+
+2.Kriksu (120 elu, 40 vastupidavust)
+Rage gallialane, kes purustab vaenlased
+kahekäemõõgaga.
+
+3. Flamma (90 elu, 70 vastupidavust)
+Kiire kui tuul, surmav kolmikoda ja võrk.
+
+4. Commodus (110 elu, 50 vastupidavust)
+Rooma keiser, kes januneb verd areenil
+""")
+
+while True:
+    choose = input()
+    if choose == "1":
+        print("Sa valisid SPARTAKUSE! Legendaarne ülestõusujuht astub areenile!")
+        player = "Spartakus"
+        break
+    elif choose == "2":
+        print("Sa valisid KRIKSU! Gallia raev täidab su sooned!")
+        player = "Kriksu"
+        break
+    elif choose == "3":
+        print("Sa valisid FLAMMA! Tuule kiirus ja surmav täpsus on sinu relv!")
+        player = "Flamma"
+        break
+    elif choose == "4":
+        print("Sa valisid COMMODUSE! Rooma keiser valitseb areeni verise rusikaga!")
+        player = "Commodus"
+        break
+        
+    else:
+        print("Wrong number")
+        continue
+
+
+
+print("Vali oma vastane(1-3)")
+if player == "Spartakus":
+    opponents = ["Kriksu", "Flamma", "Commodus"]
+    print("""1. Kriksu
+        2. Flamma
+        3. Commodus""")
+elif player == "Kriksu":
+    opponents = ["Spartakus", "Flamma", "Commodus"]
+    print("""
+        1. Spartakus
+        2. Flamma
+        3. Commodus""")
+elif player == "Flamma":
+    opponents = ["Spartakus", "Kriksu", "Commodus"]
+    print("""
+        1. Spartakus
+        2. Kriksu
+        3. Commodus""")
+elif player == "Commodus":
+    opponents = ["Spartakus", "Kriksu", "Flamma"]
+    print("""
+        1. Spartakus
+        2. Kriksu
+        3. Flamma""")
+        
+while True:
+    chooseopponent = input("Vastase valik (1-" + str(len(opponents)) + "): ")
+    if chooseopponent.isdigit() and 1 <= int(chooseopponent):
+        opponent = opponents[int(chooseopponent) - 1]
+        break
+    else:
+        print("Vale number! Proovi uuesti.")
+
+print(f"{player.upper()} vs {opponent.upper()}!")
+    
+player_health = characters[player]["health"]
+player_stamina = characters[player]["stamina"]
+opponent_health = characters[opponent]["health"]
+opponent_stamina = characters[opponent]["stamina"]
+
+round_num = 1
+
+while player_health > 0 and opponent_health > 0:
+    print("------------------------------------------------------------------------")
+    print(f"\n[RING {round_num}]")
+    print(f"Sinu elud: {player_health}/{characters[player]['health']} | Vastupidavus: {player_stamina}/{characters[player]['stamina']}")
+    print(f"{opponent.upper()} elud: {opponent_health}/{characters[opponent]['health']} | Vastupidavus: {opponent_stamina}/{characters[opponent]['stamina']}\n")
+
+    print("Vali tegevus:")
+    print("1 - Purustav hoop kirvega (15 vastupidavust)")
+    print("2 - Maru karje hirmutamiseks (10 vastupidavust)")
+    print("3 - Lahinguseisund (5 vastupidavust)")
+    print("4 - Puhata (taastab 20 vastupidavust)")
+
+    action = input("Sinu käik: ")
+
+ 
+    damage_to_enemy = 0
+    if action == "1" and player_stamina >= 15:
+        player_stamina -= 15
+        damage_to_enemy = random.randint(15, 20)
+        print(f"\n{player.upper()}: Kahekäemõõka lennutades annad sa purustava hoobi!")
+        print(f"Tehtud {damage_to_enemy} kahju!")
+    elif action == "2" and player_stamina >= 10:
+        player_stamina -= 10
+        damage_to_enemy = random.randint(8, 14)
+        print(f"\n{player.upper()}: Karjud raevukalt ja ründad!")
+        print(f"Tehtud {damage_to_enemy} kahju!")
+    elif action == "3" and player_stamina >= 5:
+        player_stamina -= 5
+        damage_to_enemy = random.randint(5, 10)
+        print(f"\n{player.upper()}: Astud lahinguseisundisse ja lööd!")
+        print(f"Tehtud {damage_to_enemy} kahju!")
+    elif action == "4":
+        recovered = min(20, characters[player]["stamina"] - player_stamina)
+        player_stamina += recovered
+        print(f"\n{player.upper()}: Taganedes taastad sa hingetõmbe ja kogud jõudu.")
+        print(f"Taastatud {recovered} vastupidavust!")
+    else:
+        print("\nSa oled liiga väsinud selleks tegevuseks või tegid vale valiku!")
+        damage_to_enemy = 0
+
+    opponent_health -= damage_to_enemy
+    if opponent_health <= 0:
+        print(f"\n{opponent.upper()} kukub liivale! Tema veri katab areeni!")
+        break
+
+    opponent_move = random.choice(["attack", "block", "rest"])
+    if opponent_move == "attack" and opponent_stamina >= 10:
+        opponent_stamina -= 10
+        dmg = random.randint(10, 15)
+        print(f"\n{opponent.upper()}: 'Naljakas, barbar!' - ründab ja tabab sind!")
+        print(f"Saadud {dmg} kahju!")
+        player_health -= dmg
+    elif opponent_move == "block":
+        print(f"\n{opponent.upper()}: blokeerib ja valmistub vasturünnakuks.")
+    else:
+        recovered = min(15, characters[opponent]["stamina"] - opponent_stamina)
+        opponent_stamina += recovered
+        print(f"\n{opponent.upper()}: hingab sügavalt ja taastab jõudu (+{recovered} vastupidavust).")
+
+    if player_health <= 0:
+        print(f"\n{player.upper()} kukub areenile! {opponent.upper()} võidab!")
+        break
+
+    round_num += 1
+
+print("\n========================================================================")
+if player_health > 0 and opponent_health <= 0:
+    print(f"{player.upper()} VÕIDAB!")
+elif opponent_health > 0 and player_health <= 0:
+    print(f"{opponent.upper()} VÕIDAB!")
+else:
+    print("Mõlemad langevad areenil... Viik!")
+print("========================================================================")
+    
+    
