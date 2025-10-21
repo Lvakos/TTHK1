@@ -104,6 +104,8 @@ player_stamina = characters[player]["stamina"]
 opponent_health = characters[opponent]["health"]
 opponent_stamina = characters[opponent]["stamina"]
 
+defending = False
+
 round_num = 1
 
 while player_health > 0 and opponent_health > 0:
@@ -134,9 +136,8 @@ while player_health > 0 and opponent_health > 0:
         print(f"Tehtud {damage_to_enemy} kahju!")
     elif action == "3" and player_stamina >= 5:
         player_stamina -= 5
-        damage_to_enemy = random.randint(5, 10)
+        defending = True
         print(f"\n{player.upper()}: Astud lahinguseisundisse ja lööd!")
-        print(f"Tehtud {damage_to_enemy} kahju!")
     elif action == "4":
         recovered = min(20, characters[player]["stamina"] - player_stamina)
         player_stamina += recovered
@@ -147,19 +148,20 @@ while player_health > 0 and opponent_health > 0:
         damage_to_enemy = 0
 
     opponent_health -= damage_to_enemy
-    if opponent_health <= 0:
-        print(f"\n{opponent.upper()} kukub liivale! Tema veri katab areeni!")
-        break
 
     opponent_move = random.choice(["attack", "block", "rest"])
-    if opponent_move == "attack" and opponent_stamina >= 10:
+    if opponent_move == "attack" and opponent_stamina >= 10 and defending == False:
         opponent_stamina -= 10
         dmg = random.randint(10, 15)
         print(f"\n{opponent.upper()}: 'Naljakas, barbar!' - ründab ja tabab sind!")
         print(f"Saadud {dmg} kahju!")
         player_health -= dmg
+    elif opponent_move == "attack" and opponent_stamina >= 10 and defending == True:
+        opponent_stamina -= 10
+        print("Player have defended! -0 DMG")
     elif opponent_move == "block":
         print(f"\n{opponent.upper()}: blokeerib ja valmistub vasturünnakuks.")
+        opponent_health += damage_to_enemy
     else:
         recovered = min(15, characters[opponent]["stamina"] - opponent_stamina)
         opponent_stamina += recovered
@@ -170,6 +172,10 @@ while player_health > 0 and opponent_health > 0:
         break
 
     round_num += 1
+    
+    if opponent_health <= 0:
+        print(f"\n{opponent.upper()} kukub liivale! Tema veri katab areeni!")
+        break
 
 print("\n========================================================================")
 if player_health > 0 and opponent_health <= 0:
