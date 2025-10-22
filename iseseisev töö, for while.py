@@ -74,57 +74,52 @@ def normaliseeri_nimi():
             return normaliseeritud_nimi
 normaliseeri_nimi()
 
-
 #for ja while tekstianalüüs
 #A
-text = input("Sisesta tekst: ")
+text = input("Sisesta tekst: ").strip()
 
-text = text.strip()
-
-cleaned = ""
+cleaned_text = ""
 prev_space = False
 
 for ch in text:
     if ch.isalpha() or ch.isdigit():
-        cleaned += ch
+        cleaned_text += ch
         prev_space = False
     elif ch in [' ', '\t', '\n']:
         if not prev_space:
-            cleaned += ' '
+            cleaned_text += ' '
             prev_space = True
 
 print("Algne tekst:")
 print(text)
 print("Puhastatud tekst:")
-print(cleaned)
+print(cleaned_text)
 
 #B
+
 kokku_ridu = 0
 tuhjad = 0
 luhikesi = 0
 
 while True:
-    rida = input()
+    rida = input("Sisesta rida (tühi rida lõpetab): ")
     if rida == "":
         break
-    kokku_ridu += 1
-    rida_stripped = rida.strip()
-    if rida_stripped == "":
-        tuhj = True
-        tuhj_ridu += 1 
-    if len(rida_stripped) < 5:
+    kokku_ridu += 1    
+    puhastatud_rida = rida.strip()
+    
+    if puhastatud_rida == "":
+        tuhjad += 1
+    if len(puhastatud_rida) < 5:
         luhikesi += 1
-    if rida_stripped == "":
-        tuhj_ridu += 1
 
-print("Kokku ridu:", kokku_ridu)
-print("Tühje ridu:", tuhj_ridu)
-print("Lühikesi ridu (<5 märki):", luhikesi)
+print(f"Kokku ridu: {kokku_ridu}")
+print(f"Tühje ridu: {tuhjad}")
+print(f"Lühikesi ridu (<5 märki): {luhikesi}")
+
 
 #C
-rida = input("Sisesta nimed komadega: ")
-
-rida = rida.strip()
+rida = input("Sisesta nimed komadega: ").strip()
 
 nimed = []
 nimi = ""
@@ -146,4 +141,3 @@ if nimi_stripped != "":
 
 for n in nimed:
     print(f"Hello, {n}!")
-
