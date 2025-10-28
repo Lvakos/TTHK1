@@ -1,0 +1,76 @@
+def nextask():
+    print("-------------------------------------------------")
+
+arr = ["tere","nimi",11,"on","Maksim"]
+print(arr[0])
+print(arr[-1])
+print(arr[len(arr)-1])
+print(arr[len(arr)//2])
+
+nextask()
+
+for i in range(0,len(arr)):
+    if i == 2:
+        continue
+    else:
+        print(arr[i])
+
+nextask()
+
+firstElements = arr[0:4]
+middleElements = arr[len(arr)//2:]
+
+print(firstElements)
+print(middleElements)
+
+nextask()
+
+print(arr[-3:])
+# [start:end:step]
+# if step is negative, it goes backwards
+# if " " is empty, it means start or end of the list
+print(arr[-1::-1])
+
+nextask()
+
+arr.append("uus")
+print(arr)
+
+myArr = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
+oddArr = []
+evenArr = []
+
+nextask()
+
+for n in range(0,len(myArr)):
+    if myArr[n] % 2 == 0:
+        evenArr.append(myArr[n])
+    else:
+        oddArr.append(myArr[n])
+print(oddArr)
+print(evenArr)
+
+nextask()
+
+basket = ["milk","bread","eggs"]
+# basket.append("Tea")
+# basket.insert(0, "Butter")
+# or
+arr1 = ["butter"]
+basket.append("Tea")
+basket = arr1 + basket
+print(basket)
+
+nextask()
+
+for p in basket:
+    print(p)
+    
+nextask()
+
+newarr = ["milk", "eggs", "butter", "tea", "cheese", "bananas"]
+for elem in newarr:
+    print(len(elem))
+    if len(elem) > 4:
+        newarr.remove(elem)
+print(newarr)
