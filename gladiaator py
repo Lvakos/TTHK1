@@ -159,13 +159,18 @@ while player_health > 0 and opponent_health > 0:
     elif opponent_move == "attack" and opponent_stamina >= 10 and defending == True:
         opponent_stamina -= 10
         print("Player have defended! -0 DMG")
+        defending = False
     elif opponent_move == "block":
         print(f"\n{opponent.upper()}: blokeerib ja valmistub vasturünnakuks.")
         opponent_health += damage_to_enemy
+        if defening == True:
+            defending = False
     else:
         recovered = min(15, characters[opponent]["stamina"] - opponent_stamina)
         opponent_stamina += recovered
         print(f"\n{opponent.upper()}: hingab sügavalt ja taastab jõudu (+{recovered} vastupidavust).")
+        if defening == True:
+            defending = False
 
     if player_health <= 0:
         print(f"\n{player.upper()} kukub areenile! {opponent.upper()} võidab!")
